@@ -922,7 +922,7 @@ MPCP esta basado en un esquema de Time Division Multiple Access no cíclico de t
     ¿Cuáles son los 4 campos principales de la trama STM-1?¿Qué funciones cumplen?
 </h2>
 
-![]("STM-1 Frame Structure.gif" "STM-1 Structure")
+![](STM-1 Frame Structure.gif "STM-1 Structure")
 
 
  
