@@ -199,7 +199,7 @@ Es importante notar que L no necesariamente representa la FEC F para todos los p
 
 Cuando hablamos de paquetes enviados desde RU a RD, no queremos decir que el originador del paquete es RU y el receptor es RD de forma implícita. Simplemente es una forma de identificar los paquetes de tránsito en uno o ambos routers.
 
-<h2>
+<h2 id="cual_es_la_utilidad_del_protocolo_ICMP">
     ¿Cuál es la utilidad del protocolo ICMP?
 </h2>
 
@@ -924,8 +924,107 @@ MPCP esta basado en un esquema de Time Division Multiple Access no cíclico de t
 
 ![](/images/STM-1_Frame_Structure.gif "STM-1 Structure")
 
+Las tramas contienen 2430 bytes de información. La duración de una trama de transporte STM-1 es 125 ms. El número de cuadros por segundo es:
 
+1 s / 125 ms = 8000 tramas por segundo.
+
+Por lo tanto:
+
+8 bits * 2430 bytes * 8000 por segundo = 155.520.000 bps o  155 Mbps.
+
+Una trama STM-1 esta creada por 9 segmentos, los cuales se encuentran uno sobre el otro. Los bits se comienzan a contar desde la esquina superior izquierda. Están arreglados en 270 columnas.
+
+![](/images/STM-1_Frame_Structure.jpg "STM-1 Structure")
+
+La primera sección se denomina Session Overhead (SOH), la cual consiste de 9 columnas por 9 filas. Contiene los mensajes de estado y control a nivel de la fibra óptica. 
+
+Las primeras tres columnas corresponden a la Regenerator Section Overhead, la cuarta al puntero AU-4, y las últimas 5 a la Multiplexer Section Overhead.
+
+---
+
+El STM-1 es la trama basica de transmisión para SDH. Consiste en un overhead más un contenedor virtual. Las primeras nueve columnas de cada trama identifican el "Section Overhead", y las demás 261 columnas la capacidad del circuito virtual. El VC más los punteros H1, H2, y H3 son llamados "unidad administrativa".
+
+Los contenedores virtuales pueden tener cualquier alineación de fase dentro de la Unidad Administrativa, la cual es indicada por el vector de la cuarta fila. Las primeras tres filas de la Section Overheadse utilizan para la Regeneration Section y las ultimas 5 para la Multiplex Section. 
+
+La trama STM se envia de forma serial por byte, fila a fila, y es es scrambled previo a la transmisión para asegurar el contenido del timing utilizado en los regeneradores aguas abajo. 
+
+### Contenedor Virtual (Virtual Container)
+
+Pueden ser enviados dentro del payload como paquetes de datos independientes. Pueden comenzar en cualquier parte de la trama, y su ubicación esta identificada por el byte J1. Los contenedores virtuales pueden ser concatenados para obtener mayor capacidad.
  
+![](/images/Session_Overhead.jpg "Session Overhead")
+
+<h2>
+    ¿Qué es una VLAN en Ethernet? ¿Qué ventajas se obtienen al implementarlas? Describa brevemente los campos del VLAN Header
+</h2>
+
+Mecanismo por el cual hosts conectados a un mismo switch físico pueden residir en un dominio de broadcast virtual, aunque compartan direcciones del mismo sub-espacio de red y aunque comparten un mismo default gateway.
+
+[](http://www.cisco.com/c/en/us/support/docs/lan-switching/8021q/17056-741-4.html "Inter-Switch Link and IEEE 802.1Q Frame Format")<small>www.cisco.com</small>
+
+<h2>Pricipales mensajes de ICMP</h2>
+
+Ver respuesta a: []('#cual_es_la_utilidad_del_protocolo_ICMP' "¿Cual es la utilidad del protocolo ICMP?")
+
+### Destination Unreachable 
+
+0. Imposible llegar
+1. Imposible llegar al host
+2. Imposible utilizar el protocolo
+3. Imposible llegar al puerto
+4. Se necesita fragmentación y el bit DF esta en 1
+5. Ruta de origen fallida
+
+### Time Exceeded
+
+0. TTL excedido
+1. Tiempo de reensable de paquete excedido
+
+### Parameter Problem
+
+Si se encuentran problemas al procesar un encabezado el Gateway puede generar uno de estos paquetes. Solo se ejecuta si el datagrama en cuestión es descartado.
+
+### Source Quench
+
+Es enviado cuando el buffer del host o de la interfaz de Gateway esta llena y no puede almacenar el datagrama para enviarlo luego. 
+
+### Redirect Message
+
+0. Redirige datagramas para la red
+1. Redirige datagramas para el host
+2. Redirige datagramas por el tipo de servicio y la red
+3. Redirige datagramas por el tipo de servicio y el host
+
+### Echo or Echo Reply
+
+8. Echo
+0. Echo Reply
+
+### Timestamp or Timestamp Reply
+
+13. Mensaje de timestamp
+14. Respuesta a mensaje de timestamp
+
+### Information Request o Information Reply
+
+15. Pedido de información
+16. Respuesta de información
+
+<h2>Ethernet vs SDH</h2>
+
+La simplicidad, interoperabilidad y eficiencias de costo de Ethernet la hace una solución muy atractiva. Además se han hecho numerosas mejoras para mejorar QoS y OAM de Ethernet para mejorar algunas debilidades que tiene frente a SDH. 
+
+Con respecto al manejo de ancho de banda, las redes SONET/SDH fueron diseñadas para constuir circuitos virtuales con anchos de banda garantizados. Esto hace más rígida la alocación del ancho de banda. 
+
+
+
+
+
+
+
+
+
+
 
 
 
